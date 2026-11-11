@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Q&A - Campus Connect</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>Campus Connect</h1>
+    </header>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="#">Information</a>
+        <a href="#">Student Login</a>
+        <a href="{{ url_for('questions') }}">Q&A</a>
+    </nav>
+
+    <main>
+        <section class="welcome">
+
+            <h2>Student Questions & Answers</h2>
+            <p>A platform for juniors and seniors to share knowledge.</p>
+
+            <h3>Ask a Question</h3>
+
+            <form method="POST" action="{{ url_for('questions') }}">
+
+                <textarea
+                    name="question_text"
+                    placeholder="Type your question here..."
+                    required></textarea>
+
+                <select name="category" required>
+                    <option value="">Select category</option>
+                    <option value="General">General</option>
+                    <option value="Academics">Academics</option>
+                    <option value="Placements">Placements</option>
+                </select>
+
+                <button type="submit">Submit Question</button>
+
+            </form>
+
+            <h3>Previously Asked Questions</h3>
+
+            <!-- Category Filter -->
+            <form method="GET" action="{{ url_for('questions') }}">
+
+                <label for="category_filter">Filter by category:</label>
+
+                <select name="category" id="category_filter"
+                        onchange="this.form.submit()">
+
+                    <option value=""
+                        {% if not selected_category %}selected{% endif %}>
+                        All Categories
+                    </option>
+
+                    <option value="General"
+                        {% if selected_category == "General" %}selected{% endif %}>
+                        General
+                    </option>
+
+                    <option value="Academics"
+                        {% if selected_category == "Academics" %}selected{% endif %}>
+                        Academics
+                    </option>
+
+                    <option value="Placements"
+                        {% if selected_category == "Placements" %}selected{% endif %}>
+                        Placements
+                    </option>
+
+                </select>
+
+                <noscript>
+                    <button type="submit">Apply Filter</button>
+                </noscript>
+
+            </form>
+
+            <!-- Display Questions -->
+            {% for q in questions %}
+
+                <div class="question-card">
+
+                    <h4>{{ q["question_text"] }}</h4>
+
+                    <p>Category: {{ q["category"] }}</p>
+
+                    <small>Posted: {{ q["created_at"] }}</small>
+
+                    <h4>Answers</h4>
+
+                    {% for answer in answers_by_question[q["question_id"]] %}
+
+                        <div class="answer-card">
+
+                            <p>{{ answer["answer_text"] }}</p>
+
+                            <small>Answered: {{ answer["created_at"] }}</small>
+
+                        </div>
+
+                    {% else %}
+
+                        <p>No answers yet.</p>
+
+                    {% endfor %}
+
+                    <form method="POST"
+                          action="{{ url_for('submit_answer', question_id=q['question_id']) }}">
+
+                        <textarea
+                            name="answer_text"
+                            placeholder="Write an answer..."
+                            required></textarea>
+
+                        <button type="submit">Submit Answer</button>
+
+                    </form>
+
+                </div>
+
+            {% else %}
+
+                <p>No questions found in this category.</p>
+
+            {% endfor %}
+
+        </section>
+    </main>
+
+    <footer>Campus Connect</footer>
+
+</body>
+</html>
