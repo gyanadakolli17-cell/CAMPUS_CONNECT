@@ -137,6 +137,7 @@ def submit_answer(question_id):
     return redirect(url_for("questions"))
 
 
+create_tables()
+
 if __name__ == "__main__":
-    create_tables()
     app.run(debug=True)
