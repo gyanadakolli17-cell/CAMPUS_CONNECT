@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ask Seniors | Campus Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark">C</span><span>Campus Connect</span></a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="main-nav"><a href="index.html">Home</a><a href="information.html">Information</a><a class="active" href="ask-seniors.html">Ask Seniors</a><a href="projects.html">Projects</a><a class="nav-login" href="login.html">Log in</a><a class="nav-cta" href="register.html">Join the community</a></nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-heading">
+      <p class="eyebrow">KNOWLEDGE SHARING</p>
+      <h1>Ask your seniors.</h1>
+      <p class="page-subtitle">Find answers or discover what other students are learning.</p>
+    </section>
+
+    <section class="filter-panel">
+      <label class="field search-field"><span>Search</span><input id="questionSearch" type="search" placeholder="Search questions, topics..."></label>
+      <label class="field"><span>Category</span><select id="questionCategory"><option value="all">All categories</option><option value="academics">Academics</option><option value="campus">College life</option><option value="career">Career</option><option value="projects">Projects</option></select></label>
+      <label class="field"><span>Status</span><select id="questionStatus"><option value="all">All</option><option value="open">Open</option><option value="answered">Answered</option></select></label>
+      <button class="button button-primary filter-button" id="filterQuestions">Filter</button>
+    </section>
+
+    <div class="section-title-row results-heading"><div><p class="eyebrow">COMMUNITY DISCUSSIONS</p><h2>Recent questions</h2></div><a class="button button-primary" href="#ask-form">＋ Ask a question</a></div>
+
+    <section class="question-list" id="questionList">
+      <article class="question-card" data-category="campus" data-status="open"><div class="question-top"><span class="pill pill-blue">College life</span><span class="status status-open">Open</span></div><h3>Where can I find information about campus clubs?</h3><p>Looking for a place to discover student clubs and activities.</p><div class="question-meta"><span>◷ 2 days ago</span><span>0 answers</span><span>Asked by Student</span></div></article>
+      <article class="question-card" data-category="academics" data-status="answered"><div class="question-top"><span class="pill pill-purple">Academics</span><span class="status status-answered">Answered</span></div><h3>How do you organise your study schedule during internals?</h3><p>Would appreciate practical tips from seniors.</p><div class="question-meta"><span>◷ 3 days ago</span><span>4 answers</span><span>Asked by Student</span></div></article>
+      <article class="question-card" data-category="career" data-status="open"><div class="question-top"><span class="pill pill-green">Career</span><span class="status status-open">Open</span></div><h3>What should a first-year student know about internships?</h3><p>Trying to understand when and how to start preparing.</p><div class="question-meta"><span>◷ 5 days ago</span><span>1 answer</span><span>Asked by Student</span></div></article>
+      <article class="question-card" data-category="projects" data-status="answered"><div class="question-top"><span class="pill pill-orange">Projects</span><span class="status status-answered">Answered</span></div><h3>How can I find teammates for a beginner project?</h3><p>Interested in collaborating with students from other years.</p><div class="question-meta"><span>◷ 1 week ago</span><span>3 answers</span><span>Asked by Student</span></div></article>
+      <p class="empty-state hidden" id="emptyQuestions">No questions match these filters. Try another search.</p>
+    </section>
+
+    <section class="ask-panel" id="ask-form"><div><p class="eyebrow">START A CONVERSATION</p><h2>Have a question?</h2><p>Share what you're curious about. A senior or fellow student may have the answer.</p></div><a class="button button-primary" href="login.html">Log in to ask <span>→</span></a></section>
+  </main>
+  <footer class="site-footer"><span>© 2026 Campus Connect</span><span>Learn together. Grow together.</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>

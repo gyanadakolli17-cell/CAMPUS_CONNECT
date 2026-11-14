@@ -23,8 +23,7 @@ def create_tables():
         CREATE TABLE IF NOT EXISTS Questions (
             question_id INTEGER PRIMARY KEY AUTOINCREMENT,
             question_text TEXT NOT NULL,
-            category TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            category TEXT NOT NULL
         )
     """)
 
@@ -33,7 +32,6 @@ def create_tables():
             answer_id INTEGER PRIMARY KEY AUTOINCREMENT,
             question_id INTEGER NOT NULL,
             answer_text TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (question_id)
                 REFERENCES Questions(question_id)
                 ON DELETE CASCADE
@@ -46,8 +44,31 @@ def create_tables():
 
 @app.route("/")
 def home():
-    return redirect(url_for("questions"))
+    return render_template("index.html")
 
+@app.route("/information")
+def information():
+    return render_template("information.html")
+
+
+@app.route("/ask-seniors")
+def ask_seniors():
+    return render_template("ask-seniors.html")
+
+
+@app.route("/projects")
+def projects():
+    return render_template("projects.html")
+
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+
+@app.route("/register")
+def register():
+    return render_template("register.html")
 
 @app.route("/questions", methods=["GET", "POST"])
 def questions():

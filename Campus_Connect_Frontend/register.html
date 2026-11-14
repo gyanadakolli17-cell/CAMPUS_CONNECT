@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Campus Connect</title>
+
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .register-layout {
+            min-height: calc(100vh - 145px);
+            display: grid;
+            place-items: center;
+            padding: 35px 0;
+        }
+
+        .register-card {
+            width: min(500px, 100%);
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            padding: 36px;
+            box-shadow: var(--shadow);
+        }
+
+        .register-icon {
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            background: #edf1ff;
+            color: var(--blue);
+            border-radius: 15px;
+            font-size: 25px;
+            margin-bottom: 20px;
+        }
+
+        .register-card h1 {
+            font-size: 30px;
+            letter-spacing: -1px;
+            margin: 0 0 8px;
+        }
+
+        .register-description {
+            color: var(--muted);
+            font-size: 14px;
+            margin: 0 0 25px;
+        }
+
+        .register-form {
+            display: grid;
+            gap: 16px;
+        }
+
+        .register-form .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .register-form .field span {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .register-form input,
+        .register-form select {
+            height: 46px;
+            width: 100%;
+            border: 1px solid #dfe4ed;
+            border-radius: 10px;
+            padding: 0 13px;
+            background: #fff;
+            color: var(--ink);
+            outline: none;
+        }
+
+        .register-form input:focus,
+        .register-form select:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px #365bea18;
+        }
+
+        .register-form .button {
+            width: 100%;
+            margin-top: 7px;
+        }
+
+        .register-bottom {
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 22px;
+        }
+
+        .register-bottom a {
+            color: var(--blue);
+            font-weight: 700;
+        }
+
+        .register-message {
+            display: none;
+            color: var(--blue);
+            font-size: 13px;
+        }
+
+        @media(max-width:520px) {
+            .register-card {
+                padding: 25px 21px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a href="{{ url_for('home') }}" class="brand">
+            <span class="brand-mark">C</span>
+            Campus Connect
+        </a>
+
+        <button class="menu-toggle" id="menuToggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false">☰</button>
+
+        <nav class="main-nav" id="mainNav">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('information') }}">Information</a>
+            <a href="{{ url_for('ask_seniors') }}">Ask Seniors</a>
+            <a href="{{ url_for('projects') }}">Projects</a>
+            <a href="{{ url_for('login') }}" class="nav-cta">Login</a>
+        </nav>
+    </header>
+
+    <main class="page-shell register-layout">
+
+        <section class="register-card">
+
+            <div class="register-icon">✦</div>
+
+            <p class="eyebrow">JOIN THE COMMUNITY</p>
+
+            <h1>Create your account</h1>
+
+            <p class="register-description">
+                Join Campus Connect and start learning, sharing
+                and connecting with fellow students.
+            </p>
+
+            <form class="register-form" id="registerForm">
+
+                <label class="field">
+                    <span>Full Name</span>
+                    <input type="text" id="fullName"
+                           placeholder="Enter your full name" required>
+                </label>
+
+                <label class="field">
+                    <span>College Email</span>
+                    <input type="email" id="email"
+                           placeholder="Enter your email address" required>
+                </label>
+
+                <label class="field">
+                    <span>Department</span>
+                    <select id="department" required>
+                        <option value="">Select your department</option>
+                        <option>Computer Science and Engineering</option>
+                        <option>Information Science and Engineering</option>
+                        <option>Electronics and Communication</option>
+                        <option>Electrical and Electronics</option>
+                        <option>Mechanical Engineering</option>
+                        <option>Other</option>
+                    </select>
+                </label>
+
+                <label class="field">
+                    <span>Year of Study</span>
+                    <select id="year" required>
+                        <option value="">Select your year</option>
+                        <option>1st Year</option>
+                        <option>2nd Year</option>
+                        <option>3rd Year</option>
+                        <option>4th Year</option>
+                    </select>
+                </label>
+
+                <label class="field">
+                    <span>Create Password</span>
+                    <input type="password" id="password"
+                           placeholder="Create a password"
+                           minlength="8" required>
+                </label>
+
+                <label class="field">
+                    <span>Confirm Password</span>
+                    <input type="password" id="confirmPassword"
+                           placeholder="Re-enter your password"
+                           minlength="8" required>
+                </label>
+
+                <button type="submit" class="button button-primary">
+                    Create Account →
+                </button>
+
+                <p class="register-message" id="registerMessage"></p>
+
+            </form>
+
+            <p class="register-bottom">
+                Already have an account?
+                <a href="{{ url_for('login') }}">Login here</a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <span>© 2026 Campus Connect</span>
+        <span>Built by students, for students.</span>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById("menuToggle");
+        const mainNav = document.getElementById("mainNav");
+
+        menuToggle.addEventListener("click", function () {
+            mainNav.classList.toggle("open");
+        });
+
+        const registerForm = document.getElementById("registerForm");
+        const message = document.getElementById("registerMessage");
+
+        registerForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const password = document.getElementById("password").value;
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                message.textContent = "Passwords do not match.";
+                message.style.display = "block";
+                return;
+            }
+
+            message.textContent =
+                "Registration form is ready. Backend connection is still required.";
+            message.style.display = "block";
+        });
+    </script>
+
+</body>
+</html>

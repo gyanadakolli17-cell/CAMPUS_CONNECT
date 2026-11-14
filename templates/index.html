@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Connect | Home</title>
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="brand">
+        <span class="brand-mark">CC</span>
+        Campus Connect
+    </div>
+
+    <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
+
+    <nav class="main-nav">
+        <a href="{{ url_for('home') }}" class="active">Home</a>
+        <a href="{{ url_for('information') }}">Information</a>
+        <a href="{{ url_for('ask_seniors') }}">Ask Seniors</a>
+        <a href="{{ url_for('projects') }}">Projects</a>
+    </nav>
+</header>
+
+<main class="page-shell">
+
+    <section class="page-heading">
+        <p class="eyebrow">YOUR STUDENT COMMUNITY</p>
+        <h1>Welcome to Campus Connect.</h1>
+        <p class="page-subtitle">
+            Learn from each other, discover opportunities and make
+            your college journey more meaningful.
+        </p>
+    </section>
+
+    <section class="info-hero">
+        <div>
+            <span class="pill pill-blue">STUDENTS HELPING STUDENTS</span>
+            <h2>Your campus. Your people. Your opportunities.</h2>
+            <p>
+                A shared space where juniors and seniors connect,
+                exchange knowledge and grow together.
+            </p>
+            <a href="{{ url_for('ask_seniors') }}" class="button button-primary">
+                Ask a Senior →
+            </a>
+        </div>
+
+        <div class="hero-art">
+            <div class="art-orbit"></div>
+            <div class="art-orbit orbit-two"></div>
+            <div class="art-core">CC</div>
+            <span class="art-note note-one">Connect</span>
+            <span class="art-note note-two">Grow together</span>
+        </div>
+    </section>
+
+    <section class="section-block">
+        <div class="section-title-row">
+            <div>
+                <p class="eyebrow">EXPLORE CAMPUS CONNECT</p>
+                <h2>Everything starts here.</h2>
+            </div>
+        </div>
+
+        <div class="card-grid three-col">
+
+            <article class="content-card info-card">
+                <div class="icon-tile">⌂</div>
+                <p class="card-kicker">01 · DISCOVER</p>
+                <h3>Campus Information</h3>
+                <p>
+                    Explore useful academic resources, campus information
+                    and student opportunities.
+                </p>
+                <a class="text-link" href="{{ url_for('information') }}">
+                    Explore information <span>→</span>
+                </a>
+            </article>
+
+            <article class="content-card info-card">
+                <div class="icon-tile lavender">✳</div>
+                <p class="card-kicker">02 · CONNECT</p>
+                <h3>Ask Seniors</h3>
+                <p>
+                    Have questions? Learn from the experiences
+                    and guidance of fellow students.
+                </p>
+                <a class="text-link" href="{{ url_for('ask_seniors') }}">
+                    Ask a question <span>→</span>
+                </a>
+            </article>
+
+            <article class="content-card info-card">
+                <div class="icon-tile mint">◇</div>
+                <p class="card-kicker">03 · CREATE</p>
+                <h3>Student Projects</h3>
+                <p>
+                    Discover student innovations, ideas and
+                    projects from across your campus.
+                </p>
+                <a class="text-link" href="{{ url_for('projects') }}">
+                    Explore projects <span>→</span>
+                </a>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="bottom-cta">
+        <div>
+            <p class="eyebrow">BETTER TOGETHER</p>
+            <h2>Knowledge grows when it is shared.</h2>
+            <p>Be part of a community where students help students.</p>
+        </div>
+        <a href="{{ url_for('ask_seniors') }}" class="button button-light">
+            Join the conversation →
+        </a>
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <span>Campus Connect · Students Helping Students</span>
+    <span>Learn. Connect. Grow.</span>
+</footer>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
