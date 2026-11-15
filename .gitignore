@@ -1,5 +1,25 @@
-__pycache__/
-*.pyc
-*.db
-venv/
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor settings
+.vscode/
+.idea/
+
+# Local environment and secrets
 .env
+.env.*
+!.env.example
+
+# Dependencies and build output
+node_modules/
+dist/
+build/
+coverage/
+
+# Logs
+*.log
+
+# Local databases
+*.db
