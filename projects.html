@@ -6,6 +6,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <!-- Frontend Senior Projects Showcase by Amulya (Member A) -->
+  <style>
+    .tech-stack-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 10px 0 12px 0;
+    }
+    .tech-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.05);
+      color: inherit;
+    }
+    .roles-needed {
+      font-size: 13px;
+      margin: 0 0 12px 0;
+      line-height: 1.45;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -17,19 +39,105 @@
   <main class="page-shell">
     <section class="page-heading">
       <p class="eyebrow">STUDENT SHOWCASE</p><h1>Ideas become projects.</h1>
-      <p class="page-subtitle">Explore what students are building, get inspired and find opportunities to collaborate.</p>
+      <p class="page-subtitle">Explore ongoing BMSIT&M senior projects, get inspired and apply to collaborate.</p>
     </section>
 
-    <section class="project-intro"><div><span class="pill pill-blue">BUILT BY STUDENTS</span><h2>Discover projects across campus.</h2><p>A shared space to showcase ideas, learn from peers and connect with people who enjoy building things.</p></div><a class="button button-primary" href="#projectGrid">Explore projects <span>→</span></a></section>
+    <section class="project-intro"><div><span class="pill pill-blue">BUILT BY BMSIT&M STUDENTS</span><h2>Discover projects across campus.</h2><p>A shared space to showcase award-winning builds, learn from seniors and join active student teams.</p></div><a class="button button-primary" href="#projectGrid">Explore projects <span>→</span></a></section>
 
-    <div class="section-title-row project-heading"><div><p class="eyebrow">THE COMMUNITY PORTFOLIO</p><h2>Featured projects</h2></div><label class="field compact-field"><span class="sr-only">Filter projects</span><select id="projectCategory"><option value="all">All categories</option><option value="web">Web development</option><option value="ai">AI & technology</option><option value="design">Design</option><option value="social">Social impact</option></select></label></div>
+    <div class="section-title-row project-heading"><div><p class="eyebrow">THE COMMUNITY PORTFOLIO</p><h2>Featured senior projects</h2></div><label class="field compact-field"><span class="sr-only">Filter projects</span><select id="projectCategory"><option value="all">All categories</option><option value="ai">AI & technology</option><option value="web">Web & cybersecurity</option><option value="design">AR/VR & simulation</option><option value="social">IoT & hardware</option></select></label></div>
 
     <section class="card-grid three-col" id="projectGrid">
-      <article class="content-card project-card" data-category="web"><div class="project-visual visual-blue"><span>01</span><b>WEB / APP</b><div class="visual-symbol">⌘</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-blue">Web development</span><span class="muted small">Beginner friendly</span></div><h3>Campus Connect</h3><p>A student community platform for sharing information, asking questions and discovering projects.</p><div class="project-footer"><span>Student team project</span><button class="text-link project-interest-trigger" type="button" data-project="Campus Connect" aria-controls="interest-form" aria-expanded="false">I'm interested →</button></div></div></article>
-      <article class="content-card project-card" data-category="ai"><div class="project-visual visual-purple"><span>02</span><b>AI / TECHNOLOGY</b><div class="visual-symbol">✳</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-purple">AI & technology</span><span class="muted small">Prototype</span></div><h3>Language Bridge</h3><p>An AI-assisted language translation concept designed to make communication easier.</p><div class="project-footer"><span>Student team project</span><button class="text-link project-interest-trigger" type="button" data-project="Language Bridge" aria-controls="interest-form" aria-expanded="false">I'm interested →</button></div></div></article>
-      <article class="content-card project-card" data-category="design"><div class="project-visual visual-orange"><span>03</span><b>DESIGN</b><div class="visual-symbol">◇</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-orange">Design</span><span class="muted small">Concept</span></div><h3>Creative Portfolio</h3><p>A showcase concept for presenting student creativity, design experiments and ideas.</p><div class="project-footer"><span>Student team project</span><button class="text-link project-interest-trigger" type="button" data-project="Creative Portfolio" aria-controls="interest-form" aria-expanded="false">I'm interested →</button></div></div></article>
-      <article class="content-card project-card" data-category="social"><div class="project-visual visual-green"><span>04</span><b>SOCIAL IMPACT</b><div class="visual-symbol">✦</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-green">Social impact</span><span class="muted small">Idea</span></div><h3>Community Connect</h3><p>A concept focused on helping students discover volunteering and community initiatives.</p><div class="project-footer"><span>Student team project</span><button class="text-link project-interest-trigger" type="button" data-project="Community Connect" aria-controls="interest-form" aria-expanded="false">I'm interested →</button></div></div></article>
+      <!-- Project 1: Team xANDER -->
+      <article class="content-card project-card" data-category="design">
+        <div class="project-visual visual-purple"><span>01</span><b>AR/VR & AI/ML</b><div class="visual-symbol">◇</div></div>
+        <div class="project-card-body">
+          <div class="card-tags"><span class="pill pill-purple">AR/VR & AI/ML</span><span class="muted small">Open for 1st/2nd Year</span></div>
+          <h3>VR Lab Simulator (Team xANDER)</h3>
+          <p>An immersive virtual reality laboratory simulator designed to improve accessibility, safety, and hands-on learning for engineering experiments without physical lab hazards.</p>
+          <div class="tech-stack-row">
+            <span class="tech-chip">Unity</span><span class="tech-chip">C#</span><span class="tech-chip">Blender</span><span class="tech-chip">OpenXR</span><span class="tech-chip">Python</span>
+          </div>
+          <p class="roles-needed"><strong>Roles Needed:</strong> Looking for 2 helpers in 3D asset modeling and UI/UX testing.</p>
+          <div class="project-footer">
+            <span>Leads: Mujawar Zaid, Deepthi Buchupalli &amp; Samarth Pasalkar (AIML — 1st Prize, INNOVATEX 4.0)</span>
+            <button class="text-link project-interest-trigger" type="button" data-project="VR Lab Simulator (Team xANDER)" aria-controls="interest-form" aria-expanded="false">I'm interested →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2: Team Authentix -->
+      <article class="content-card project-card" data-category="social">
+        <div class="project-visual visual-green"><span>02</span><b>IOT / HARDWARE</b><div class="visual-symbol">✦</div></div>
+        <div class="project-card-body">
+          <div class="card-tags"><span class="pill pill-green">IoT / Hardware & AI/ML</span><span class="muted small">2 Spots Available</span></div>
+          <h3>Authentix — Smart IoT Security &amp; Verification System</h3>
+          <p>A hardware-software integrated authentication solution built to prevent unauthorized access and tampering in connected environments.</p>
+          <div class="tech-stack-row">
+            <span class="tech-chip">Python</span><span class="tech-chip">Embedded C</span><span class="tech-chip">Arduino/ESP32</span><span class="tech-chip">MQTT</span><span class="tech-chip">Machine Learning</span>
+          </div>
+          <p class="roles-needed"><strong>Roles Needed:</strong> Seeking juniors interested in sensor integration and backend dashboard development.</p>
+          <div class="project-footer">
+            <span>Leads: Milan, Ashutosh Sharma, Talha &amp; Aryan R (CSE &amp; AIML — IoT Track Winners, NMH Hacks)</span>
+            <button class="text-link project-interest-trigger" type="button" data-project="Authentix — Smart IoT Security & Verification System" aria-controls="interest-form" aria-expanded="false">I'm interested →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3: CyberShield -->
+      <article class="content-card project-card" data-category="web">
+        <div class="project-visual visual-orange"><span>03</span><b>CYBERSECURITY & WEB</b><div class="visual-symbol">⌘</div></div>
+        <div class="project-card-body">
+          <div class="card-tags"><span class="pill pill-orange">Cybersecurity & Web Dev</span><span class="muted small">Open for 2nd Year</span></div>
+          <h3>CyberShield — Interactive Phishing Defense Simulator</h3>
+          <p>An interactive training platform that educates students and users on cyber hygiene by immersing them in realistic, simulated phishing attack scenarios.</p>
+          <div class="tech-stack-row">
+            <span class="tech-chip">Python</span><span class="tech-chip">React</span><span class="tech-chip">Node.js</span><span class="tech-chip">NLP</span><span class="tech-chip">HTML/CSS</span>
+          </div>
+          <p class="roles-needed"><strong>Roles Needed:</strong> Looking for 1 Frontend Helper to build interactive scenario cards.</p>
+          <div class="project-footer">
+            <span>Leads: Richard U, M. Jeethendra Reddy, Shashank G &amp; Y. Uday Kumar (CSE — InCSEption 2.0 Winners)</span>
+            <button class="text-link project-interest-trigger" type="button" data-project="CyberShield — Interactive Phishing Defense Simulator" aria-controls="interest-form" aria-expanded="false">I'm interested →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 4: CyberGuard-AI -->
+      <article class="content-card project-card" data-category="ai">
+        <div class="project-visual visual-blue"><span>04</span><b>AI/ML & CLOUD</b><div class="visual-symbol">✳</div></div>
+        <div class="project-card-body">
+          <div class="card-tags"><span class="pill pill-blue">AI/ML & Cloud Security</span><span class="muted small">Open for 2nd/3rd Year</span></div>
+          <h3>CyberGuard-AI — Explainable Threat Detection System</h3>
+          <p>Uses Graph Neural Networks (GNNs) to detect cyberattacks across IoT and cloud networks while providing clear, human-readable explanations for every flagged threat.</p>
+          <div class="tech-stack-row">
+            <span class="tech-chip">Python</span><span class="tech-chip">PyTorch Geometric (GNNs)</span><span class="tech-chip">Docker</span><span class="tech-chip">Cloud APIs</span><span class="tech-chip">Explainable AI</span>
+          </div>
+          <p class="roles-needed"><strong>Roles Needed:</strong> Looking for 1 backend or React helper to build a live alert dashboard.</p>
+          <div class="project-footer">
+            <span>Lead: Sindhu C — CS Postgrad, BMSIT&amp;M</span>
+            <button class="text-link project-interest-trigger" type="button" data-project="CyberGuard-AI — Explainable Threat Detection System" aria-controls="interest-form" aria-expanded="false">I'm interested →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 5: Multilingual SMS & Threat Classifier -->
+      <article class="content-card project-card" data-category="ai">
+        <div class="project-visual visual-purple"><span>05</span><b>AI/ML & NLP</b><div class="visual-symbol">✳</div></div>
+        <div class="project-card-body">
+          <div class="card-tags"><span class="pill pill-purple">AI/ML & NLP</span><span class="muted small">2 Spots Available</span></div>
+          <h3>High-Speed Multilingual SMS &amp; Threat Classifier</h3>
+          <p>A transformer-based classification pipeline capable of filtering 10,000+ daily multilingual messages with 92% accuracy and low inference latency.</p>
+          <div class="tech-stack-row">
+            <span class="tech-chip">Python</span><span class="tech-chip">Hugging Face Transformers</span><span class="tech-chip">PyTorch</span><span class="tech-chip">FastAPI</span><span class="tech-chip">ONNX</span>
+          </div>
+          <p class="roles-needed"><strong>Roles Needed:</strong> Seeking juniors interested in dataset annotation and model optimization.</p>
+          <div class="project-footer">
+            <span>Lead: Manas Khanna — 4th Year AIML ('27), BMSIT&amp;M</span>
+            <button class="text-link project-interest-trigger" type="button" data-project="High-Speed Multilingual SMS & Threat Classifier" aria-controls="interest-form" aria-expanded="false">I'm interested →</button>
+          </div>
+        </div>
+      </article>
     </section>
+
     <p class="empty-state hidden" id="emptyProjects">No projects in this category yet.</p>
     <section class="project-interest" id="interest-form" aria-labelledby="interestHeading" hidden>
       <div class="project-interest-heading">
@@ -38,7 +146,7 @@
         <p class="muted">This frontend demo validates your details and shows a confirmation. It does not send or store your information.</p>
       </div>
       <form class="project-interest-form" id="projectInterestForm">
-        <label class="field"><span>Project</span><select id="interestProject" name="project" required><option value="">Choose a project</option><option>Campus Connect</option><option>Language Bridge</option><option>Creative Portfolio</option><option>Community Connect</option></select></label>
+        <label class="field"><span>Project</span><select id="interestProject" name="project" required><option value="">Choose a project</option><option>VR Lab Simulator (Team xANDER)</option><option>Authentix — Smart IoT Security &amp; Verification System</option><option>CyberShield — Interactive Phishing Defense Simulator</option><option>CyberGuard-AI — Explainable Threat Detection System</option><option>High-Speed Multilingual SMS &amp; Threat Classifier</option></select></label>
         <label class="field"><span>Your name</span><input id="interestName" name="name" type="text" maxlength="80" autocomplete="name" required></label>
         <label class="field"><span>Email</span><input id="interestEmail" name="email" type="email" autocomplete="email" required></label>
         <label class="field"><span>How would you like to contribute?</span><textarea id="interestMessage" name="message" minlength="10" maxlength="400" rows="3" placeholder="Share a skill or idea you'd bring to the project." required></textarea></label>
@@ -48,7 +156,7 @@
     </section>
     <section class="bottom-cta"><div><p class="eyebrow">HAVE AN IDEA?</p><h2>Your project could be next.</h2><p>Share your work and inspire someone else to start building.</p></div><a class="button button-light" href="register.html">Join the community <span>→</span></a></section>
   </main>
-  <footer class="site-footer"><span>© 2026 Campus Connect</span><span>Learn together. Grow together.</span></footer>
+  <footer class="site-footer"><span>© 2026 Campus Connect • Frontend Projects Showcase by Amulya</span><span>Learn together. Grow together.</span></footer>
   <script src="app.js"></script>
 </body>
 </html>
