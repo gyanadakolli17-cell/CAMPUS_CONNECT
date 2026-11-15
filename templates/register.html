@@ -150,23 +150,24 @@
                 and connecting with fellow students.
             </p>
 
-            <form class="register-form" id="registerForm">
+            <form class="register-form" id="registerForm"
+                action="{{ url_for('register') }}" method="POST">
 
                 <label class="field">
                     <span>Full Name</span>
-                    <input type="text" id="fullName"
+                    <input type="text" id="fullName" name="full_name"
                            placeholder="Enter your full name" required>
                 </label>
 
                 <label class="field">
                     <span>College Email</span>
-                    <input type="email" id="email"
+                    <input type="email" id="email" name="email"
                            placeholder="Enter your email address" required>
                 </label>
 
                 <label class="field">
                     <span>Department</span>
-                    <select id="department" required>
+                    <select id="department" name="department" required>
                         <option value="">Select your department</option>
                         <option>Computer Science and Engineering</option>
                         <option>Information Science and Engineering</option>
@@ -179,7 +180,7 @@
 
                 <label class="field">
                     <span>Year of Study</span>
-                    <select id="year" required>
+                    <select id="year" name="year" required>
                         <option value="">Select your year</option>
                         <option>1st Year</option>
                         <option>2nd Year</option>
@@ -190,24 +191,27 @@
 
                 <label class="field">
                     <span>Create Password</span>
-                    <input type="password" id="password"
-                           placeholder="Create a password"
-                           minlength="8" required>
+                    <input type="password" id="password" name="password"
+                        placeholder="Create a password"
+                        minlength="8" required>
                 </label>
 
                 <label class="field">
                     <span>Confirm Password</span>
-                    <input type="password" id="confirmPassword"
-                           placeholder="Re-enter your password"
-                           minlength="8" required>
+                    <input type="password" id="confirmPassword" name="confirm_password"
+                        placeholder="Re-enter your password"
+                        minlength="8" required>
                 </label>
 
                 <button type="submit" class="button button-primary">
                     Create Account →
                 </button>
 
-                <p class="register-message" id="registerMessage"></p>
-
+                {% if error %}
+                    <p class="register-message" style="display:block; color:#c0392b;">
+                        {{ error }}
+                </p>
+                {% endif %}
             </form>
 
             <p class="register-bottom">
@@ -230,27 +234,6 @@
 
         menuToggle.addEventListener("click", function () {
             mainNav.classList.toggle("open");
-        });
-
-        const registerForm = document.getElementById("registerForm");
-        const message = document.getElementById("registerMessage");
-
-        registerForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            const password = document.getElementById("password").value;
-            const confirmPassword =
-                document.getElementById("confirmPassword").value;
-
-            if (password !== confirmPassword) {
-                message.textContent = "Passwords do not match.";
-                message.style.display = "block";
-                return;
-            }
-
-            message.textContent =
-                "Registration form is ready. Backend connection is still required.";
-            message.style.display = "block";
         });
     </script>
 

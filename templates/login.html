@@ -148,13 +148,15 @@
                 and become a part of your campus community.
             </p>
 
-            <form class="login-form" id="loginForm">
-
+            <form class="login-form" id="loginForm"
+                action="{{ url_for('login') }}" method="POST">
+        
                 <label class="field">
                     <span>College Email</span>
                     <input
                         type="email"
                         id="email"
+                        name="email"
                         placeholder="Enter your college email"
                         required
                     >
@@ -165,6 +167,7 @@
                     <input
                         type="password"
                         id="password"
+                        name="password"
                         placeholder="Enter your password"
                         required
                     >
@@ -174,10 +177,12 @@
                     Login <span>→</span>
                 </button>
 
-                <p class="login-message" id="loginMessage">
-                    Login form is ready. Backend authentication
-                    still needs to be connected.
-                </p>
+                {% if error %}
+                    <p class="login-message"
+                        style="display:block; color:#c0392b;">
+                        {{ error }}
+                    </p>
+                {% endif %}
 
             </form>
 
@@ -207,14 +212,6 @@
             mainNav.classList.toggle("open");
         });
 
-        // Frontend demonstration only
-        const loginForm = document.getElementById("loginForm");
-        const loginMessage = document.getElementById("loginMessage");
-
-        loginForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            loginMessage.style.display = "block";
-        });
     </script>
 
 </body>

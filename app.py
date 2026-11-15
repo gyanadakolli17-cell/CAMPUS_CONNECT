@@ -1,9 +1,11 @@
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 from pathlib import Path
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+app.secret_key = "campus-connect-local-development-key"
 
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "campus_connect.db"
@@ -37,7 +39,16 @@ def create_tables():
                 ON DELETE CASCADE
         )
     """)
-
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS Users (
+            user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            full_name TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            department TEXT NOT NULL,
+            year TEXT NOT NULL,
+            password_hash TEXT NOT NULL
+        )
+    """)
     conn.commit()
     conn.close()
 
@@ -60,14 +71,117 @@ def ask_seniors():
 def projects():
     return render_template("projects.html")
 
+@app.route("/seniors")
+def seniors():
+    return render_template("seniors.html")
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
+
+    if request.method == "POST":
+
+        # 1. Get the submitted email and password
+        email = request.form.get("email", "").strip().lower()
+        password = request.form.get("password", "")
+
+        # 2. Check whether both fields are filled
+        if not email or not password:
+            return render_template(
+                "login.html",
+                error="Please enter your email and password."
+            )
+
+        # 3. Find the student using their email
+        conn = get_db_connection()
+
+        user = conn.execute(
+            "SELECT * FROM Users WHERE email = ?",
+            (email,)
+        ).fetchone()
+
+        conn.close()
+
+        # 4. Check the password against the stored hash
+        if user and check_password_hash(user["password_hash"], password):
+
+            # 5. Remember that the student is logged in
+            session["user_id"] = user["user_id"]
+            session["user_name"] = user["full_name"]
+
+            return redirect(url_for("home"))
+
+        # 6. Incorrect login details
+        return render_template(
+            "login.html",
+            error="Invalid email or password."
+        )
+
     return render_template("login.html")
 
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
+
+    if request.method == "POST":
+
+        # 1. Collect form data
+        full_name = request.form.get("full_name", "").strip()
+        email = request.form.get("email", "").strip().lower()
+        department = request.form.get("department", "").strip()
+        year = request.form.get("year", "").strip()
+        password = request.form.get("password", "")
+        confirm_password = request.form.get("confirm_password", "")
+
+        # 2. Check that all fields are filled
+        if not all([full_name, email, department, year,
+                    password, confirm_password]):
+            return render_template(
+                "register.html",
+                error="Please fill in all fields."
+            )
+
+        # 3. Check password length
+        if len(password) < 8:
+            return render_template(
+                "register.html",
+                error="Password must contain at least 8 characters."
+            )
+
+        # 4. Check whether passwords match
+        if password != confirm_password:
+            return render_template(
+                "register.html",
+                error="Passwords do not match."
+            )
+
+        # 5. Hash the password
+        password_hash = generate_password_hash(password)
+
+        # 6. Store the student in the database
+        conn = get_db_connection()
+
+        try:
+            conn.execute(
+                """INSERT INTO Users
+                (full_name, email, department, year, password_hash)
+                VALUES (?, ?, ?, ?, ?)""",
+                (full_name, email, department, year, password_hash)
+            )
+
+            conn.commit()
+
+        except sqlite3.IntegrityError:
+            conn.close()
+            return render_template(
+                "register.html",
+                error="This email is already registered."
+            )
+
+        conn.close()
+
+        # 7. Registration successful
+        return redirect(url_for("login"))
+
     return render_template("register.html")
 
 @app.route("/questions", methods=["GET", "POST"])

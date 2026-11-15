@@ -1,24 +1,218 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Student Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Campus Connect</title>
+
+    <!-- Existing stylesheet from your ZIP -->
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        .login-layout {
+            min-height: calc(100vh - 145px);
+            display: grid;
+            place-items: center;
+            padding: 35px 0;
+        }
+
+        .login-card {
+            width: min(460px, 100%);
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            padding: 38px;
+            box-shadow: var(--shadow);
+        }
+
+        .login-icon {
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            background: #edf1ff;
+            color: var(--blue);
+            border-radius: 15px;
+            font-size: 25px;
+            margin-bottom: 22px;
+        }
+
+        .login-card h1 {
+            font-size: 30px;
+            letter-spacing: -1px;
+            margin: 0 0 8px;
+        }
+
+        .login-description {
+            color: var(--muted);
+            margin: 0 0 27px;
+            font-size: 14px;
+        }
+
+        .login-form {
+            display: grid;
+            gap: 18px;
+        }
+
+        .login-form .field input {
+            height: 48px;
+            width: 100%;
+            border: 1px solid #dfe4ed;
+            border-radius: 10px;
+            padding: 0 14px;
+            background: #fff;
+            color: var(--ink);
+            outline: none;
+        }
+
+        .login-form .field input:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px #365bea18;
+        }
+
+        .login-form .button {
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .login-bottom {
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+            margin: 23px 0 0;
+        }
+
+        .login-bottom a {
+            color: var(--blue);
+            font-weight: 700;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .login-message {
+            color: var(--blue);
+            font-size: 13px;
+            margin: 0;
+            display: block;
+        }
+
+        @media (max-width: 520px) {
+            .login-card {
+                padding: 27px 22px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <header><h1>Campus Connect</h1></header>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="information.html">Information</a>
-        <a href="login.html">Student Login</a>
-        <a href="questions.html">Q&A</a>
-    </nav>
-    <main>
-        <section class="welcome">
-            <h2>Student Login</h2>
-            <p>Welcome to the student portal.</p>
-            <p>Login functionality will be integrated in the next phase.</p>
+
+    <!-- Navigation bar -->
+    <header class="site-header">
+        <a href="index.html" class="brand">
+            <span class="brand-mark">C</span>
+            Campus Connect
+        </a>
+
+        <button class="menu-toggle" id="menuToggle"
+                aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+        <nav class="main-nav" id="mainNav">
+            <a href="index.html">Home</a>
+            <a href="information.html">Information</a>
+            <a href="ask-seniors.html">Ask Seniors</a>
+            <a href="seniors.html">Senior Directory</a>
+            <a href="projects.html">Projects</a>
+            <a href="login.html" class="nav-cta active">Login</a>
+        </nav>
+    </header>
+
+    <!-- Login section -->
+    <main class="page-shell login-layout">
+
+        <section class="login-card">
+
+            <div class="login-icon">↗</div>
+
+            <p class="eyebrow">WELCOME BACK</p>
+
+            <h1>Welcome to Campus Connect</h1>
+
+            <p class="login-description">
+                Sign in to connect with your seniors, explore resources
+                and become a part of your campus community.
+            </p>
+
+            <form class="login-form" id="loginForm">
+
+                <label class="field">
+                    <span>College Email</span>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your college email"
+                        required
+                    >
+                </label>
+
+                <label class="field">
+                    <span>Password</span>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+                </label>
+
+                <button type="submit" class="button button-primary">
+                    Login <span>→</span>
+                </button>
+
+                <p class="login-message" id="loginMessage">
+                    Demo login only: any valid email and password will continue.
+                </p>
+
+            </form>
+
+            <p class="login-bottom">
+    New to Campus Connect?
+    <a href="register.html">Create an account</a>
+</p>
+
+            <a href="index.html" class="back-home">← Back to Home</a>
+
         </section>
+
     </main>
-    <footer>Campus Connect</footer>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <span>© 2026 Campus Connect</span>
+        <span>Built by students, for students.</span>
+    </footer>
+
+    <script>
+        // Mobile navigation
+        const menuToggle = document.getElementById("menuToggle");
+        const mainNav = document.getElementById("mainNav");
+
+        menuToggle.addEventListener("click", function () {
+            const isOpen = mainNav.classList.toggle("open");
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+        });
+
+        const loginForm = document.getElementById("loginForm");
+
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            window.location.href = "seniors.html";
+        });
+    </script>
+
 </body>
 </html>

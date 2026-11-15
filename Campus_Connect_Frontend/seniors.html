@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Meet experienced students and find a senior mentor in the Campus Connect directory.">
+  <title>Senior Directory | Campus Connect</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">CC</span>
+      Campus Connect
+    </a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="information.html">Information</a>
+      <a href="ask-seniors.html">Ask Seniors</a>
+      <a href="seniors.html" class="active" aria-current="page">Senior Directory</a>
+      <a href="projects.html">Projects</a>
+      <a href="login.html" class="nav-cta">Login</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-heading">
+      <p class="eyebrow">LEARN FROM EXPERIENCE</p>
+      <h1>Find your people.</h1>
+      <p class="page-subtitle">Meet senior students who can share what they’ve learned, help you explore a field, or point you toward your next opportunity.</p>
+    </section>
+
+    <section class="directory-intro" aria-label="About the senior directory">
+      <div>
+        <p class="eyebrow">CAMPUS CONNECT MENTORS</p>
+        <h2>A little guidance goes a long way.</h2>
+        <p>Browse sample student profiles by department or topic. These demo profiles are placeholders for your verified campus mentors.</p>
+      </div>
+      <div class="directory-count"><strong>06</strong>sample seniors</div>
+    </section>
+
+    <section class="filter-panel senior-filters" aria-label="Filter senior profiles">
+      <label class="field search-field">
+        <span>Search profiles</span>
+        <input id="seniorSearch" type="search" placeholder="Name, skill, or topic">
+      </label>
+      <label class="field">
+        <span>Department</span>
+        <select id="seniorDepartment">
+          <option value="all">All departments</option>
+          <option value="cse">Computer Science</option>
+          <option value="ise">Information Science</option>
+          <option value="ece">Electronics &amp; Communication</option>
+          <option value="me">Mechanical Engineering</option>
+          <option value="eee">Electrical &amp; Electronics</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>Mentoring topic</span>
+        <select id="seniorTopic">
+          <option value="all">All topics</option>
+          <option value="software">Software &amp; coding</option>
+          <option value="data">AI &amp; data</option>
+          <option value="design">Design &amp; product</option>
+          <option value="career">Internships &amp; careers</option>
+        </select>
+      </label>
+    </section>
+
+    <p class="senior-results" id="seniorResultCount" aria-live="polite">6 seniors found</p>
+
+    <section class="senior-grid" aria-label="Senior student profiles">
+      <article class="senior-card" data-department="cse" data-topic="software">
+        <div class="senior-card-top">
+          <div class="senior-avatar avatar-blue" aria-hidden="true">NR</div>
+          <div class="senior-name"><h3>Neha Rao</h3><p>Computer Science · 4th year</p></div>
+        </div>
+        <div class="senior-card-body">
+          <p>Enjoys helping students get started with web development, hackathons, and building a first portfolio project.</p>
+          <div class="senior-tags"><span class="pill pill-blue">Web development</span><span class="pill pill-purple">Hackathons</span></div>
+          <div class="senior-details"><span class="senior-availability">Open to questions</span><span>Usually replies in a day</span></div>
+          <a class="button button-primary senior-action" href="ask-seniors.html">Ask Neha a question <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="senior-card" data-department="ise" data-topic="data">
+        <div class="senior-card-top">
+          <div class="senior-avatar avatar-purple" aria-hidden="true">AM</div>
+          <div class="senior-name"><h3>Arjun Mehta</h3><p>Information Science · 4th year</p></div>
+        </div>
+        <div class="senior-card-body">
+          <p>Can share practical advice on machine learning projects, data basics, and presenting technical work clearly.</p>
+          <div class="senior-tags"><span class="pill pill-purple">Machine learning</span><span class="pill pill-blue">Python</span></div>
+          <div class="senior-details"><span class="senior-availability">Open to questions</span><span>Usually replies in a day</span></div>
+          <a class="button button-primary senior-action" href="ask-seniors.html">Ask Arjun a question <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="senior-card" data-department="ece" data-topic="career">
+        <div class="senior-card-top">
+          <div class="senior-avatar avatar-teal" aria-hidden="true">AK</div>
+          <div class="senior-name"><h3>Aisha Khan</h3><p>Electronics &amp; Communication · 4th year</p></div>
+        </div>
+        <div class="senior-card-body">
+          <p>Happy to talk about balancing core electronics coursework with internships and exploring different career paths.</p>
+          <div class="senior-tags"><span class="pill pill-green">Internships</span><span class="pill pill-orange">Career planning</span></div>
+          <div class="senior-details"><span class="senior-availability">Open to questions</span><span>Usually replies in 2 days</span></div>
+          <a class="button button-primary senior-action" href="ask-seniors.html">Ask Aisha a question <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="senior-card" data-department="cse" data-topic="design">
+        <div class="senior-card-top">
+          <div class="senior-avatar avatar-orange" aria-hidden="true">RS</div>
+          <div class="senior-name"><h3>Rohan Shetty</h3><p>Computer Science · 3rd year</p></div>
+        </div>
+        <div class="senior-card-body">
+          <p>Interested in UI design and product thinking; can help turn a rough idea into a polished project prototype.</p>
+          <div class="senior-tags"><span class="pill pill-orange">UI / UX</span><span class="pill pill-blue">Product design</span></div>
+          <div class="senior-details"><span class="senior-availability">Open to questions</span><span>Usually replies in a day</span></div>
+          <a class="button button-primary senior-action" href="ask-seniors.html">Ask Rohan a question <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="senior-card" data-department="me" data-topic="career">
+        <div class="senior-card-top">
+          <div class="senior-avatar avatar-rose" aria-hidden="true">KN</div>
+          <div class="senior-name"><h3>Kavya Nair</h3><p>Mechanical Engineering · 4th year</p></div>
+        </div>
+        <div class="senior-card-body">
+          <p>Shares guidance on student teams, design competitions, and finding hands-on opportunities beyond class.</p>
+          <div class="senior-tags"><span class="pill pill-orange">Design teams</span><span class="pill pill-green">Opportunities</span></div>
+          <div class="senior-details"><span class="senior-availability">Open to questions</span><span>Usually replies in 2 days</span></div>
+          <a class="button button-primary senior-action" href="ask-seniors.html">Ask Kavya a question <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="senior-card" data-department="eee" data-topic="software">
+        <div class="senior-card-top">
+          <div class="senior-avatar avatar-green" aria-hidden="true">DP</div>
+          <div class="senior-name"><h3>Dev Patel</h3><p>Electrical &amp; Electronics · 4th year</p></div>
+        </div>
+        <div class="senior-card-body">
+          <p>Exploring embedded systems and beginner-friendly coding projects; glad to help with picking a first build.</p>
+          <div class="senior-tags"><span class="pill pill-green">Embedded systems</span><span class="pill pill-blue">C programming</span></div>
+          <div class="senior-details"><span class="senior-availability">Open to questions</span><span>Usually replies in a day</span></div>
+          <a class="button button-primary senior-action" href="ask-seniors.html">Ask Dev a question <span>→</span></a>
+        </div>
+      </article>
+
+      <p class="empty-state hidden" id="emptySeniors">No profiles match those filters. Try a different search or department.</p>
+    </section>
+
+    <section class="bottom-cta directory-cta">
+      <div>
+        <p class="eyebrow">START A CONVERSATION</p>
+        <h2>Have something you want to ask?</h2>
+        <p>Post a question for the student community to discuss.</p>
+      </div>
+      <a href="ask-seniors.html" class="button button-light">Ask the community →</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Campus Connect · Students Helping Students</span>
+    <span>Sample profiles for frontend demonstration</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

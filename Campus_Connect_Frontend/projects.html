@@ -5,26 +5,13 @@
   <title>Projects | Campus Connect</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="{{ url_for('home') }}">
-        <span class="brand-mark">C</span>
-        <span>Campus Connect</span>
-    </a>
-
+    <a class="brand" href="index.html"><span class="brand-mark">C</span><span>Campus Connect</span></a>
     <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-
-    <nav class="main-nav">
-        <a href="{{ url_for('home') }}">Home</a>
-        <a href="{{ url_for('information') }}">Information</a>
-        <a href="{{ url_for('ask_seniors') }}">Ask Seniors</a>
-        <a class="active" href="{{ url_for('projects') }}">Projects</a>
-        <a class="nav-login" href="{{ url_for('login') }}">Log in</a>
-        <a class="nav-cta" href="{{ url_for('register') }}">Join the community</a>
-    </nav>
+    <nav class="main-nav"><a href="index.html">Home</a><a href="information.html">Information</a><a href="ask-seniors.html">Ask Seniors</a><a href="seniors.html">Senior Directory</a><a class="active" href="projects.html">Projects</a><a class="nav-login" href="login.html">Log in</a><a class="nav-cta" href="register.html">Join the community</a></nav>
   </header>
 
   <main class="page-shell">
@@ -33,20 +20,35 @@
       <p class="page-subtitle">Explore what students are building, get inspired and find opportunities to collaborate.</p>
     </section>
 
-    <section class="project-intro"><div><span class="pill pill-blue">BUILT BY STUDENTS</span><h2>Discover projects across campus.</h2><p>A shared space to showcase ideas, learn from peers and connect with people who enjoy building things.</p></div><a class="button button-primary" href="{{ url_for('login') }}">＋ Share your project</a></section>
+    <section class="project-intro"><div><span class="pill pill-blue">BUILT BY STUDENTS</span><h2>Discover projects across campus.</h2><p>A shared space to showcase ideas, learn from peers and connect with people who enjoy building things.</p></div><a class="button button-primary" href="#projectGrid">Explore projects <span>→</span></a></section>
 
     <div class="section-title-row project-heading"><div><p class="eyebrow">THE COMMUNITY PORTFOLIO</p><h2>Featured projects</h2></div><label class="field compact-field"><span class="sr-only">Filter projects</span><select id="projectCategory"><option value="all">All categories</option><option value="web">Web development</option><option value="ai">AI & technology</option><option value="design">Design</option><option value="social">Social impact</option></select></label></div>
 
     <section class="card-grid three-col" id="projectGrid">
-      <article class="content-card project-card" data-category="web"><div class="project-visual visual-blue"><span>01</span><b>WEB / APP</b><div class="visual-symbol">⌘</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-blue">Web development</span><span class="muted small">Beginner friendly</span></div><h3>Campus Connect</h3><p>A student community platform for sharing information, asking questions and discovering projects.</p><div class="project-footer"><span>Student team project</span><span class="text-link">Explore ↗</span></div></div></article>
-      <article class="content-card project-card" data-category="ai"><div class="project-visual visual-purple"><span>02</span><b>AI / TECHNOLOGY</b><div class="visual-symbol">✳</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-purple">AI & technology</span><span class="muted small">Prototype</span></div><h3>Language Bridge</h3><p>An AI-assisted language translation concept designed to make communication easier.</p><div class="project-footer"><span>Student team project</span><span class="text-link">Explore ↗</span></div></div></article>
-      <article class="content-card project-card" data-category="design"><div class="project-visual visual-orange"><span>03</span><b>DESIGN</b><div class="visual-symbol">◇</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-orange">Design</span><span class="muted small">Concept</span></div><h3>Creative Portfolio</h3><p>A showcase concept for presenting student creativity, design experiments and ideas.</p><div class="project-footer"><span>Student team project</span><span class="text-link">Explore ↗</span></div></div></article>
-      <article class="content-card project-card" data-category="social"><div class="project-visual visual-green"><span>04</span><b>SOCIAL IMPACT</b><div class="visual-symbol">✦</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-green">Social impact</span><span class="muted small">Idea</span></div><h3>Community Connect</h3><p>A concept focused on helping students discover volunteering and community initiatives.</p><div class="project-footer"><span>Student team project</span><span class="text-link">Explore ↗</span></div></div></article>
+      <article class="content-card project-card" data-category="web"><div class="project-visual visual-blue"><span>01</span><b>WEB / APP</b><div class="visual-symbol">⌘</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-blue">Web development</span><span class="muted small">Beginner friendly</span></div><h3>Campus Connect</h3><p>A student community platform for sharing information, asking questions and discovering projects.</p><div class="project-footer"><span>Student team project</span><button class="text-link project-interest-trigger" type="button" data-project="Campus Connect" aria-controls="interest-form" aria-expanded="false">I'm interested →</button></div></div></article>
+      <article class="content-card project-card" data-category="ai"><div class="project-visual visual-purple"><span>02</span><b>AI / TECHNOLOGY</b><div class="visual-symbol">✳</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-purple">AI & technology</span><span class="muted small">Prototype</span></div><h3>Language Bridge</h3><p>An AI-assisted language translation concept designed to make communication easier.</p><div class="project-footer"><span>Student team project</span><button class="text-link project-interest-trigger" type="button" data-project="Language Bridge" aria-controls="interest-form" aria-expanded="false">I'm interested →</button></div></div></article>
+      <article class="content-card project-card" data-category="design"><div class="project-visual visual-orange"><span>03</span><b>DESIGN</b><div class="visual-symbol">◇</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-orange">Design</span><span class="muted small">Concept</span></div><h3>Creative Portfolio</h3><p>A showcase concept for presenting student creativity, design experiments and ideas.</p><div class="project-footer"><span>Student team project</span><button class="text-link project-interest-trigger" type="button" data-project="Creative Portfolio" aria-controls="interest-form" aria-expanded="false">I'm interested →</button></div></div></article>
+      <article class="content-card project-card" data-category="social"><div class="project-visual visual-green"><span>04</span><b>SOCIAL IMPACT</b><div class="visual-symbol">✦</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-green">Social impact</span><span class="muted small">Idea</span></div><h3>Community Connect</h3><p>A concept focused on helping students discover volunteering and community initiatives.</p><div class="project-footer"><span>Student team project</span><button class="text-link project-interest-trigger" type="button" data-project="Community Connect" aria-controls="interest-form" aria-expanded="false">I'm interested →</button></div></div></article>
     </section>
     <p class="empty-state hidden" id="emptyProjects">No projects in this category yet.</p>
-    <section class="bottom-cta"><div><p class="eyebrow">HAVE AN IDEA?</p><h2>Your project could be next.</h2><p>Share your work and inspire someone else to start building.</p></div><a class="button button-light" href="{{ url_for('login') }}">Join the community <span>→</span></a></section>
+    <section class="project-interest" id="interest-form" aria-labelledby="interestHeading" hidden>
+      <div class="project-interest-heading">
+        <p class="eyebrow">COLLABORATE</p>
+        <h2 id="interestHeading">Interested in a project?</h2>
+        <p class="muted">This frontend demo validates your details and shows a confirmation. It does not send or store your information.</p>
+      </div>
+      <form class="project-interest-form" id="projectInterestForm">
+        <label class="field"><span>Project</span><select id="interestProject" name="project" required><option value="">Choose a project</option><option>Campus Connect</option><option>Language Bridge</option><option>Creative Portfolio</option><option>Community Connect</option></select></label>
+        <label class="field"><span>Your name</span><input id="interestName" name="name" type="text" maxlength="80" autocomplete="name" required></label>
+        <label class="field"><span>Email</span><input id="interestEmail" name="email" type="email" autocomplete="email" required></label>
+        <label class="field"><span>How would you like to contribute?</span><textarea id="interestMessage" name="message" minlength="10" maxlength="400" rows="3" placeholder="Share a skill or idea you'd bring to the project." required></textarea></label>
+        <p class="form-feedback" id="interestFeedback" aria-live="polite"></p>
+        <div class="interest-actions"><button class="button button-primary" type="submit">Send demo interest <span>→</span></button><button class="button button-light" id="closeInterestForm" type="button">Cancel</button></div>
+      </form>
+    </section>
+    <section class="bottom-cta"><div><p class="eyebrow">HAVE AN IDEA?</p><h2>Your project could be next.</h2><p>Share your work and inspire someone else to start building.</p></div><a class="button button-light" href="register.html">Join the community <span>→</span></a></section>
   </main>
   <footer class="site-footer"><span>© 2026 Campus Connect</span><span>Learn together. Grow together.</span></footer>
-  <script src="{{ url_for('static', filename='app.js') }}"></script>
+  <script src="app.js"></script>
 </body>
 </html>
