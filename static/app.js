@@ -132,65 +132,81 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const interestPanel = document.getElementById("interest-form");
-  const interestProject = document.getElementById("interestProject");
-  const interestForm = document.getElementById("projectInterestForm");
-  const interestFeedback = document.getElementById("interestFeedback");
-  const interestButtons = [...document.querySelectorAll(".project-interest-trigger")];
-  if (interestPanel && interestProject && interestForm && interestFeedback) {
-    const closeButton = document.getElementById("closeInterestForm");
-    const setInterestPanelOpen = isOpen => {
-      interestPanel.hidden = !isOpen;
-      interestButtons.forEach(button => button.setAttribute("aria-expanded", String(isOpen)));
-    };
+  
+const interestPanel = document.getElementById("interest-form");
+const interestProject = document.getElementById("interestProject");
+const interestForm = document.getElementById("projectInterestForm");
+const interestFeedback = document.getElementById("interestFeedback");
+const interestButtons = [...document.querySelectorAll(".project-interest-trigger")];
 
-    interestButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        interestProject.value = button.dataset.project;
-        interestFeedback.textContent = "";
-        interestFeedback.classList.remove("form-success", "form-error");
-        setInterestPanelOpen(true);
-        interestPanel.scrollIntoView({ behavior: "smooth", block: "center" });
-        document.getElementById("interestName").focus({ preventScroll: true });
-      });
-    });
+if (interestPanel && interestProject && interestForm && interestFeedback) {
+  const closeButton = document.getElementById("closeInterestForm");
 
-    closeButton?.addEventListener("click", () => {
-      interestForm.reset();
+  const setInterestPanelOpen = isOpen => {
+    interestPanel.hidden = !isOpen;
+    interestButtons.forEach(button =>
+      button.setAttribute("aria-expanded", String(isOpen))
+    );
+  };
+
+  interestButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const selectedProject = button.dataset.project;
+
+      const matchingOption = [...interestProject.options].find(
+        option => option.textContent.trim() === selectedProject
+      );
+
+      if (matchingOption) {
+        interestProject.value = matchingOption.value;
+      }
+
       interestFeedback.textContent = "";
       interestFeedback.classList.remove("form-success", "form-error");
-      setInterestPanelOpen(false);
+
+      setInterestPanelOpen(true);
+      interestPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+      document.getElementById("interestName").focus({ preventScroll: true });
     });
-    interestForm.addEventListener("input", () => {
-      interestFeedback.textContent = "";
-      interestFeedback.classList.remove("form-success", "form-error");
-    });
-    interestForm.addEventListener("submit", event => {
+  });
+
+  closeButton?.addEventListener("click", () => {
+    interestForm.reset();
+    interestFeedback.textContent = "";
+    interestFeedback.classList.remove("form-success", "form-error");
+    setInterestPanelOpen(false);
+  });
+
+  interestForm.addEventListener("input", () => {
+    interestFeedback.textContent = "";
+    interestFeedback.classList.remove("form-success", "form-error");
+  });
+
+  interestForm.addEventListener("submit", event => {
+    const nameInput = document.getElementById("interestName");
+    const messageInput = document.getElementById("interestMessage");
+
+    const name = nameInput.value.trim();
+    const message = messageInput.value.trim();
+
+    if (!name) {
       event.preventDefault();
-      const nameInput = document.getElementById("interestName");
-      const messageInput = document.getElementById("interestMessage");
-      const name = nameInput.value.trim();
-      const message = messageInput.value.trim();
-      if (!name) {
-        interestFeedback.textContent = "Please enter your name.";
-        interestFeedback.classList.add("form-error");
-        nameInput.focus();
-        return;
-      }
-      if (message.length < 10) {
-        interestFeedback.textContent = "Please enter at least 10 characters about how you can contribute.";
-        interestFeedback.classList.add("form-error");
-        messageInput.focus();
-        return;
-      }
+      interestFeedback.textContent = "Please enter your name.";
+      interestFeedback.classList.add("form-error");
+      nameInput.focus();
+      return;
+    }
 
-      const project = interestProject.value;
-      interestForm.reset();
-      interestProject.value = project;
-      interestFeedback.textContent = `Thanks, ${name}. Your interest in ${project} is confirmed for this demo only; no request was sent or saved.`;
-      interestFeedback.classList.add("form-success");
-    });
-  }
+    if (message.length < 10) {
+      event.preventDefault();
+      interestFeedback.textContent =
+        "Please enter at least 10 characters about how you can contribute.";
+      interestFeedback.classList.add("form-error");
+      messageInput.focus();
+      return;
+    }
+  });
+}
 
   const seniorSearch = document.getElementById("seniorSearch");
   const seniorDepartment = document.getElementById("seniorDepartment");

@@ -49,6 +49,114 @@ def create_tables():
             password_hash TEXT NOT NULL
         )
     """)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS Projects (
+            project_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL UNIQUE,
+            category TEXT NOT NULL,
+            visual_class TEXT NOT NULL,
+            visual_label TEXT NOT NULL,
+            tag_label TEXT NOT NULL,
+            availability TEXT NOT NULL,
+            description TEXT NOT NULL,
+            tech_stack TEXT NOT NULL,
+            roles_needed TEXT NOT NULL,
+            lead_info TEXT NOT NULL
+        )
+    """)
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS ProjectInterests (
+            interest_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            project_id INTEGER NOT NULL,
+            student_name TEXT NOT NULL,
+            student_email TEXT NOT NULL,
+            contribution TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (project_id)
+                REFERENCES Projects(project_id)
+                ON DELETE CASCADE
+        )
+    """)
+    conn.commit()
+    conn.close()
+def insert_sample_projects():
+
+    conn = get_db_connection()
+
+    projects = [
+        (
+            "VR Lab Simulator (Team xANDER)",
+            "design",
+            "visual-purple",
+            "AR/VR & AI/ML",
+            "AR/VR & AI/ML",
+            "Open for 1st/2nd Year",
+            "An immersive virtual reality laboratory simulator designed to improve accessibility, safety, and hands-on learning for engineering experiments without physical lab hazards.",
+            "Unity, C#, Blender, OpenXR, Python",
+            "Looking for 2 helpers in 3D asset modeling and UI/UX testing.",
+            "Leads: Mujawar Zaid, Deepthi Buchupalli & Samarth Pasalkar (AIML — 1st Prize, INNOVATEX 4.0)"
+        ),
+        (
+            "Authentix — Smart IoT Security & Verification System",
+            "social",
+            "visual-green",
+            "IOT / HARDWARE",
+            "IoT / Hardware & AI/ML",
+            "2 Spots Available",
+            "A hardware-software integrated authentication solution built to prevent unauthorized access and tampering in connected environments.",
+            "Python, Embedded C, Arduino/ESP32, MQTT, Machine Learning",
+            "Seeking juniors interested in sensor integration and backend dashboard development.",
+            "Leads: Milan, Ashutosh Sharma, Talha & Aryan R (CSE & AIML — IoT Track Winners, NMH Hacks)"
+        ),
+        (
+            "CyberShield — Interactive Phishing Defense Simulator",
+            "web",
+            "visual-orange",
+            "CYBERSECURITY & WEB",
+            "Cybersecurity & Web Dev",
+            "Open for 2nd Year",
+            "An interactive training platform that educates students and users on cyber hygiene through simulated phishing scenarios.",
+            "Python, React, Node.js, NLP, HTML/CSS",
+            "Looking for 1 Frontend Helper to build interactive scenario cards.",
+            "Leads: Richard U, M. Jeethendra Reddy, Shashank G & Y. Uday Kumar (CSE — InCSEption 2.0 Winners)"
+        ),
+        (
+            "CyberGuard-AI — Explainable Threat Detection System",
+            "ai",
+            "visual-blue",
+            "AI/ML & CLOUD",
+            "AI/ML & Cloud Security",
+            "Open for 2nd/3rd Year",
+            "Uses Graph Neural Networks (GNNs) to detect cyberattacks across IoT and cloud networks while providing human-readable explanations.",
+            "Python, PyTorch Geometric (GNNs), Docker, Cloud APIs, Explainable AI",
+            "Looking for 1 backend or React helper to build a live alert dashboard.",
+            "Lead: Sindhu C — CS Postgrad, BMSIT&M"
+        ),
+        (
+            "High-Speed Multilingual SMS & Threat Classifier",
+            "ai",
+            "visual-purple",
+            "AI/ML & NLP",
+            "AI/ML & NLP",
+            "2 Spots Available",
+            "A transformer-based classification pipeline designed to filter multilingual messages.",
+            "Python, Hugging Face Transformers, PyTorch, FastAPI, ONNX",
+            "Seeking juniors interested in dataset annotation and model optimization.",
+            "Lead: Manas Khanna — 4th Year AIML ('27), BMSIT&M"
+        )
+    ]
+
+    for project in projects:
+        conn.execute(
+            """INSERT OR IGNORE INTO Projects
+            (title, category, visual_class, visual_label,
+             tag_label, availability, description, tech_stack,
+             roles_needed, lead_info)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            project
+        )
+
     conn.commit()
     conn.close()
 
@@ -69,7 +177,64 @@ def ask_seniors():
 
 @app.route("/projects")
 def projects():
-    return render_template("projects.html")
+    conn = get_db_connection()
+
+    projects = conn.execute(
+        "SELECT * FROM Projects ORDER BY project_id"
+    ).fetchall()
+
+    conn.close()
+
+    return render_template("projects.html", projects=projects)
+
+@app.route("/project-interest", methods=["POST"])
+def project_interest():
+
+    student_name = request.form.get("name", "").strip()
+    student_email = request.form.get("email", "").strip()
+    contribution = request.form.get("message", "").strip()
+    project_id = request.form.get("project_id", "").strip()
+
+    # Validate the submitted information
+    if not student_name or not student_email or len(student_name) > 80:
+        return "Please enter a valid name and email.", 400
+
+    if "@" not in student_email or len(student_email) > 254:
+        return "Please enter a valid email address.", 400
+
+    if not contribution or len(contribution) < 10 or len(contribution) > 400:
+        return "Contribution message must be between 10 and 400 characters.", 400
+
+    if not project_id:
+        return "Please select a project.", 400
+
+    try:
+        project_id = int(project_id)
+    except ValueError:
+        return "Invalid project selection.", 400
+
+    conn = get_db_connection()
+
+    project = conn.execute(
+        "SELECT project_id FROM Projects WHERE project_id = ?",
+        (project_id,)
+    ).fetchone()
+
+    if project is None:
+        conn.close()
+        return "Selected project does not exist.", 404
+
+    conn.execute(
+        """INSERT INTO ProjectInterests
+        (project_id, student_name, student_email, contribution)
+        VALUES (?, ?, ?, ?)""",
+        (project_id, student_name, student_email, contribution)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("projects"))
 
 @app.route("/seniors")
 def seniors():
@@ -273,6 +438,7 @@ def submit_answer(question_id):
 
 
 create_tables()
+insert_sample_projects()
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -7,6 +7,30 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}">
+  <!-- Senior Projects Showcase styling by A -->
+<style>
+  .tech-stack-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0 12px 0;
+  }
+
+  .tech-chip {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(15, 23, 42, 0.05);
+    color: inherit;
+  }
+
+  .roles-needed {
+    font-size: 13px;
+    margin: 0 0 12px 0;
+    line-height: 1.45;
+  }
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -36,14 +60,105 @@
     <section class="project-intro"><div><span class="pill pill-blue">BUILT BY STUDENTS</span><h2>Discover projects across campus.</h2><p>A shared space to showcase ideas, learn from peers and connect with people who enjoy building things.</p></div><a class="button button-primary" href="{{ url_for('login') }}">＋ Share your project</a></section>
 
     <div class="section-title-row project-heading"><div><p class="eyebrow">THE COMMUNITY PORTFOLIO</p><h2>Featured projects</h2></div><label class="field compact-field"><span class="sr-only">Filter projects</span><select id="projectCategory"><option value="all">All categories</option><option value="web">Web development</option><option value="ai">AI & technology</option><option value="design">Design</option><option value="social">Social impact</option></select></label></div>
+   
 
-    <section class="card-grid three-col" id="projectGrid">
-      <article class="content-card project-card" data-category="web"><div class="project-visual visual-blue"><span>01</span><b>WEB / APP</b><div class="visual-symbol">⌘</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-blue">Web development</span><span class="muted small">Beginner friendly</span></div><h3>Campus Connect</h3><p>A student community platform for sharing information, asking questions and discovering projects.</p><div class="project-footer"><span>Student team project</span><span class="text-link">Explore ↗</span></div></div></article>
-      <article class="content-card project-card" data-category="ai"><div class="project-visual visual-purple"><span>02</span><b>AI / TECHNOLOGY</b><div class="visual-symbol">✳</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-purple">AI & technology</span><span class="muted small">Prototype</span></div><h3>Language Bridge</h3><p>An AI-assisted language translation concept designed to make communication easier.</p><div class="project-footer"><span>Student team project</span><span class="text-link">Explore ↗</span></div></div></article>
-      <article class="content-card project-card" data-category="design"><div class="project-visual visual-orange"><span>03</span><b>DESIGN</b><div class="visual-symbol">◇</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-orange">Design</span><span class="muted small">Concept</span></div><h3>Creative Portfolio</h3><p>A showcase concept for presenting student creativity, design experiments and ideas.</p><div class="project-footer"><span>Student team project</span><span class="text-link">Explore ↗</span></div></div></article>
-      <article class="content-card project-card" data-category="social"><div class="project-visual visual-green"><span>04</span><b>SOCIAL IMPACT</b><div class="visual-symbol">✦</div></div><div class="project-card-body"><div class="card-tags"><span class="pill pill-green">Social impact</span><span class="muted small">Idea</span></div><h3>Community Connect</h3><p>A concept focused on helping students discover volunteering and community initiatives.</p><div class="project-footer"><span>Student team project</span><span class="text-link">Explore ↗</span></div></div></article>
-    </section>
-    <p class="empty-state hidden" id="emptyProjects">No projects in this category yet.</p>
+<section class="card-grid three-col" id="projectGrid">
+
+  {% for project in projects %}
+
+  <article class="content-card project-card" data-category="{{ project.category }}">
+
+    <div class="project-visual {{ project.visual_class }}">
+      <span>{{ "%02d"|format(loop.index) }}</span>
+      <b>{{ project.visual_label }}</b>
+      <div class="visual-symbol">◇</div>
+    </div>
+
+    <div class="project-card-body">
+
+      <div class="card-tags">
+        <span class="pill">{{ project.tag_label }}</span>
+        <span class="muted small">{{ project.availability }}</span>
+      </div>
+
+      <h3>{{ project.title }}</h3>
+
+      <p>{{ project.description }}</p>
+
+      <div class="tech-stack-row">
+        {% for tech in project.tech_stack.split(',') %}
+          <span class="tech-chip">{{ tech.strip() }}</span>
+        {% endfor %}
+      </div>
+
+      <p class="roles-needed">
+        <strong>Roles Needed:</strong> {{ project.roles_needed }}
+      </p>
+
+      <div class="project-footer">
+        <span>{{ project.lead_info }}</span>
+
+        <button
+          class="text-link project-interest-trigger"
+          type="button"
+          data-project="{{ project.title }}"
+          aria-controls="interest-form"
+          aria-expanded="false">
+          I'm interested →
+        </button>
+      </div>
+
+    </div>
+  </article>
+
+  {% endfor %}
+
+</section>
+
+<p class="empty-state hidden" id="emptyProjects">No projects in this category yet.</p>
+<section class="project-interest" id="interest-form" aria-labelledby="interestHeading" hidden>
+  <div class="project-interest-heading">
+    <p class="eyebrow">COLLABORATE</p>
+    <h2 id="interestHeading">Interested in a project?</h2>
+    <p class="muted">This frontend demo validates your details and shows a confirmation. It does not send or store your information.</p>
+  </div>
+
+  <form class="project-interest-form" id="projectInterestForm"
+      method="POST" action="{{ url_for('project_interest') }}">
+    <label class="field">
+      <span>Project</span>
+      <select id="interestProject" name="project_id" required>
+        <option value="">Choose a project</option>
+        {% for project in projects %}
+          <option value="{{ project.project_id }}">{{ project.title }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Your name</span>
+      <input id="interestName" name="name" type="text" maxlength="80" required>
+    </label>
+
+    <label class="field">
+      <span>Email</span>
+      <input id="interestEmail" name="email" type="email" required>
+    </label>
+
+    <label class="field">
+      <span>How would you like to contribute?</span>
+      <textarea id="interestMessage" name="message" minlength="10" maxlength="400" rows="3" required></textarea>
+    </label>
+
+    <p class="form-feedback" id="interestFeedback" aria-live="polite"></p>
+
+    <div class="interest-actions">
+      <button class="button button-primary" type="submit">Send demo interest →</button>
+      <button class="button button-light" id="closeInterestForm" type="button">Cancel</button>
+    </div>
+  </form>
+</section>
+
     <section class="bottom-cta"><div><p class="eyebrow">HAVE AN IDEA?</p><h2>Your project could be next.</h2><p>Share your work and inspire someone else to start building.</p></div><a class="button button-light" href="{{ url_for('login') }}">Join the community <span>→</span></a></section>
   </main>
   <footer class="site-footer"><span>© 2026 Campus Connect</span><span>Learn together. Grow together.</span></footer>

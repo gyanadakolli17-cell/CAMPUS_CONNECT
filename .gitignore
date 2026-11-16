@@ -23,3 +23,5 @@ coverage/
 
 # Local databases
 *.db
+
+__pycache__/
