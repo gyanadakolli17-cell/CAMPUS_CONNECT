@@ -78,6 +78,24 @@ def create_tables():
                 ON DELETE CASCADE
         )
     """)
+
+    # NEW TABLE: Seniors
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS Seniors (
+            senior_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            full_name TEXT NOT NULL UNIQUE,
+            department TEXT NOT NULL,
+            department_name TEXT NOT NULL,
+            year TEXT NOT NULL,
+            initials TEXT NOT NULL,
+            avatar_class TEXT NOT NULL,
+            bio TEXT NOT NULL,
+            topic TEXT NOT NULL,
+            tags TEXT NOT NULL,
+            availability TEXT NOT NULL,
+            response_time TEXT NOT NULL
+        )
+    """)
     conn.commit()
     conn.close()
 def insert_sample_projects():
@@ -160,10 +178,75 @@ def insert_sample_projects():
     conn.commit()
     conn.close()
 
+def insert_sample_seniors():
+    conn = get_db_connection()
+
+    seniors = [
+        (
+            "Neha Rao", "cse", "Computer Science", "4th Year",
+            "NR", "avatar-blue",
+            "I enjoy helping juniors with web development, hackathons and building portfolios.",
+            "software", "Web development,Hackathons",
+            "Open to questions", "Usually replies in a day"
+        ),
+        (
+            "Arjun Mehta", "ise", "Information Science", "4th Year",
+            "AM", "avatar-purple",
+            "I can help with machine learning, data basics and presenting technical work.",
+            "data", "Machine learning,Python",
+            "Open to questions", "Usually replies in a day"
+        ),
+        (
+            "Aisha Khan", "ece", "Electronics & Communication", "4th Year",
+            "AK", "avatar-teal",
+            "I can guide juniors with electronics coursework, internships and career paths.",
+            "career", "Internships,Career planning",
+            "Open to questions", "Usually replies in 2 days"
+        ),
+        (
+            "Rohan Shetty", "cse", "Computer Science", "3rd Year",
+            "RS", "avatar-orange",
+            "I enjoy UI design, product thinking and helping students build prototypes.",
+            "design", "UI / UX,Product design",
+            "Open to questions", "Usually replies in a day"
+        ),
+        (
+            "Kavya Nair", "me", "Mechanical Engineering", "4th Year",
+            "KN", "avatar-rose",
+            "I can help juniors explore student teams, design competitions and hands-on opportunities.",
+            "career", "Design teams,Opportunities",
+            "Open to questions", "Usually replies in 2 days"
+        ),
+        (
+            "Dev Patel", "eee", "Electrical & Electronics", "4th Year",
+            "DP", "avatar-green",
+            "I enjoy explaining embedded systems, beginner coding projects and getting started with your first build.",
+            "software", "Embedded systems,C programming",
+            "Open to questions", "Usually replies in a day"
+        )
+    ]
+
+    for senior in seniors:
+        conn.execute(
+            """INSERT OR IGNORE INTO Seniors
+            (full_name, department, department_name, year,
+             initials, avatar_class, bio, topic, tags,
+             availability, response_time)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            senior
+        )
+
+    conn.commit()
+    conn.close()
 
 @app.route("/")
 def home():
     return render_template("index.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("home"))
 
 @app.route("/information")
 def information():
@@ -238,7 +321,15 @@ def project_interest():
 
 @app.route("/seniors")
 def seniors():
-    return render_template("seniors.html")
+    conn = get_db_connection()
+
+    seniors = conn.execute(
+        "SELECT * FROM Seniors ORDER BY senior_id"
+    ).fetchall()
+
+    conn.close()
+
+    return render_template("seniors.html", seniors=seniors)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -439,6 +530,7 @@ def submit_answer(question_id):
 
 create_tables()
 insert_sample_projects()
+insert_sample_seniors()
 
 if __name__ == "__main__":
     app.run(debug=True)
