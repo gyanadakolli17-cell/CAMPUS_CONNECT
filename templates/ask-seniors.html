@@ -1,15 +1,21 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ask Seniors | Campus Connect</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask Seniors | Campus Connect</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
-  <header class="site-header">
+
+<header class="site-header">
     <a class="brand" href="{{ url_for('home') }}">
         <span class="brand-mark">C</span>
         <span>Campus Connect</span>
@@ -22,38 +28,191 @@
         <a href="{{ url_for('information') }}">Information</a>
         <a class="active" href="{{ url_for('ask_seniors') }}">Ask Seniors</a>
         <a href="{{ url_for('projects') }}">Projects</a>
-        <a class="nav-login" href="{{ url_for('login') }}">Log in</a>
-        <a class="nav-cta" href="{{ url_for('register') }}">Join the community</a>
+        <a href="{{ url_for('seniors') }}">Senior Directory</a>
+
+        {% if session.get('user_id') %}
+            <span>Welcome, {{ session.get('user_name') }}</span>
+            <a class="nav-cta" href="{{ url_for('logout') }}">Log out</a>
+        {% else %}
+            <a class="nav-login" href="{{ url_for('login') }}">Log in</a>
+            <a class="nav-cta" href="{{ url_for('register') }}">Join the community</a>
+        {% endif %}
     </nav>
-  </header>
+</header>
 
-  <main class="page-shell">
-    <section class="page-heading">
-      <p class="eyebrow">KNOWLEDGE SHARING</p>
-      <h1>Ask your seniors.</h1>
-      <p class="page-subtitle">Find answers or discover what other students are learning.</p>
+<main class="page-shell">
+
+    <section class="page-heading compact">
+        <p class="eyebrow">STUDENT-TO-STUDENT HELP</p>
+        <h1>Ask Seniors</h1>
+        <p class="page-subtitle">
+            Ask a question, read answers from seniors, or help another student.
+        </p>
     </section>
 
-    <section class="filter-panel">
-      <label class="field search-field"><span>Search</span><input id="questionSearch" type="search" placeholder="Search questions, topics..."></label>
-      <label class="field"><span>Category</span><select id="questionCategory"><option value="all">All categories</option><option value="academics">Academics</option><option value="campus">College life</option><option value="career">Career</option><option value="projects">Projects</option></select></label>
-      <label class="field"><span>Status</span><select id="questionStatus"><option value="all">All</option><option value="open">Open</option><option value="answered">Answered</option></select></label>
-      <button class="button button-primary filter-button" id="filterQuestions">Filter</button>
+    <section class="simple-panel">
+        <h2>Ask your question</h2>
+        <p>Keep it clear so seniors can give you a useful answer.</p>
+
+        <form id="questionForm" method="POST" action="{{ url_for('questions') }}">
+
+            <div class="simple-form-grid">
+
+                <label class="field">
+                    <span>Your name</span>
+                    <input name="askedBy" placeholder="Your name (optional)">
+                </label>
+
+                <label class="field">
+                    <span>Topic</span>
+                    <select name="category" required>
+                        <option value="Academics">Academics</option>
+                        <option value="College life">College life</option>
+                        <option value="Career">Career</option>
+                        <option value="Projects">Projects</option>
+                        <option value="General">General</option>
+                    </select>
+                </label>
+
+                <label class="field wide">
+                    <span>Question</span>
+                    <input name="title" placeholder="e.g. How should I prepare for semester exams?" required minlength="8">
+                </label>
+
+                <label class="field wide">
+                    <span>Add details</span>
+                    <textarea name="details" placeholder="Explain what you need help with…" required minlength="10"></textarea>
+                </label>
+
+            </div>
+
+            <button class="button button-primary" type="submit" style="margin-top:14px">
+                Post question
+            </button>
+
+            <div id="questionFeedback" class="inline-message" role="status"></div>
+
+        </form>
     </section>
 
-    <div class="section-title-row results-heading"><div><p class="eyebrow">COMMUNITY DISCUSSIONS</p><h2>Recent questions</h2></div><a class="button button-primary" href="#ask-form">＋ Ask a question</a></div>
+    <div class="section-title-row results-heading">
+        <div>
+            <p class="eyebrow">COMMUNITY DISCUSSIONS</p>
+            <h2>Questions & answers</h2>
+        </div>
 
-    <section class="question-list" id="questionList">
-      <article class="question-card" data-category="campus" data-status="open"><div class="question-top"><span class="pill pill-blue">College life</span><span class="status status-open">Open</span></div><h3>Where can I find information about campus clubs?</h3><p>Looking for a place to discover student clubs and activities.</p><div class="question-meta"><span>◷ 2 days ago</span><span>0 answers</span><span>Asked by Student</span></div></article>
-      <article class="question-card" data-category="academics" data-status="answered"><div class="question-top"><span class="pill pill-purple">Academics</span><span class="status status-answered">Answered</span></div><h3>How do you organise your study schedule during internals?</h3><p>Would appreciate practical tips from seniors.</p><div class="question-meta"><span>◷ 3 days ago</span><span>4 answers</span><span>Asked by Student</span></div></article>
-      <article class="question-card" data-category="career" data-status="open"><div class="question-top"><span class="pill pill-green">Career</span><span class="status status-open">Open</span></div><h3>What should a first-year student know about internships?</h3><p>Trying to understand when and how to start preparing.</p><div class="question-meta"><span>◷ 5 days ago</span><span>1 answer</span><span>Asked by Student</span></div></article>
-      <article class="question-card" data-category="projects" data-status="answered"><div class="question-top"><span class="pill pill-orange">Projects</span><span class="status status-answered">Answered</span></div><h3>How can I find teammates for a beginner project?</h3><p>Interested in collaborating with students from other years.</p><div class="question-meta"><span>◷ 1 week ago</span><span>3 answers</span><span>Asked by Student</span></div></article>
-      <p class="empty-state hidden" id="emptyQuestions">No questions match these filters. Try another search.</p>
+        <span class="muted small" id="questionResultCount">Questions</span>
+    </div>
+
+    <div class="content-toolbar">
+
+        <label class="field">
+            <span class="sr-only">Search questions</span>
+            <input id="questionSearch" type="search" placeholder="Search questions and answers...">
+        </label>
+
+        <label class="field">
+            <span class="sr-only">Filter topic</span>
+            <select id="questionCategory">
+                <option value="all">All topics</option>
+                <option value="Academics">Academics</option>
+                <option value="College life">College life</option>
+                <option value="Career">Career</option>
+                <option value="Projects">Projects</option>
+                <option value="General">General</option>
+                <option value="Placements">Placements</option>
+            </select>
+        </label>
+
+        <label class="field">
+            <span class="sr-only">Filter answer status</span>
+            <select id="questionStatus">
+                <option value="all">All questions</option>
+                <option value="open">Awaiting answer</option>
+                <option value="answered">Answered</option>
+            </select>
+        </label>
+
+    </div>
+
+    <section class="question-list simple-list" id="questionList" aria-live="polite">
+
+        {% for question in questions %}
+
+            {% set answers = answers_by_question[question.question_id] %}
+
+            <article class="question-card simple-question"
+                     data-category="{{ question.category }}"
+                     data-status="{{ 'answered' if answers else 'open' }}">
+
+                <div class="question-top">
+                    <span class="pill pill-blue">{{ question.category }}</span>
+
+                    <span class="status {{ 'status-answered' if answers else 'status-open' }}">
+                        {{ 'Answered' if answers else 'Awaiting answer' }}
+                    </span>
+                </div>
+
+                <h3>{{ question.question_text.split('\n\nDetails:\n')[0] }}</h3>
+
+                {% if '\n\nDetails:\n' in question.question_text %}
+                    <p class="question-details">
+                        {{ question.question_text.split('\n\nDetails:\n', 1)[1] }}
+                    </p>
+                {% endif %}
+
+                <div class="question-meta">
+                    <span>Asked by {{ question.asked_by if question.asked_by else 'Student' }}</span>
+                    <span>{{ answers|length }} {{ 'answer' if answers|length == 1 else 'answers' }}</span>
+                </div>
+
+                <div class="answers-block">
+                    <h4>Answers from seniors</h4>
+
+                    {% for answer in answers %}
+                        <div class="answer-item">
+                            <p>{{ answer.answer_text }}</p>
+                        </div>
+                    {% else %}
+                        <p class="question-details">No answers yet.</p>
+                    {% endfor %}
+                </div>
+                <form class="answer-form"
+                      method="POST"
+                      action="{{ url_for('submit_answer', question_id=question.question_id) }}">
+
+                    <label class="field">
+                        <span>Write an answer</span>
+                        <textarea
+                            name="answer_text"
+                            placeholder="Write a helpful answer..."
+                            required
+                            minlength="5"></textarea>
+                    </label>
+
+                    <button class="button button-primary" type="submit">
+                        Post answer
+                    </button>
+
+                </form>
+            </article>
+
+        {% else %}
+
+            <div class="empty-state">No questions yet. Be the first to ask something!</div>
+
+        {% endfor %}
+
     </section>
 
-    <section class="ask-panel" id="ask-form"><div><p class="eyebrow">START A CONVERSATION</p><h2>Have a question?</h2><p>Share what you're curious about. A senior or fellow student may have the answer.</p></div><a class="button button-primary" href="{{ url_for('login') }}">Log in to ask <span>→</span></a></section>
-  </main>
-  <footer class="site-footer"><span>© 2026 Campus Connect</span><span>Learn together. Grow together.</span></footer>
-  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</main>
+
+<footer class="site-footer">
+    <span>© 2026 Campus Connect</span>
+    <span>Learn together. Grow together.</span>
+</footer>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+
 </body>
 </html>

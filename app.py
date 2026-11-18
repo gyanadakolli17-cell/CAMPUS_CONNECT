@@ -1,11 +1,27 @@
 
+import os
+from datetime import timedelta
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 from pathlib import Path
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = "campus-connect-local-development-key"
+
+app.config["SECRET_KEY"] = os.environ.get(
+    "SECRET_KEY",
+    "local-development-only-change-before-deployment"
+)
+
+# Session security settings
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SECURE"] = (
+    os.environ.get("SESSION_COOKIE_SECURE", "false").lower() == "true"
+)
+
+# Session duration
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(hours=2)
 
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "campus_connect.db"
@@ -255,7 +271,28 @@ def information():
 
 @app.route("/ask-seniors")
 def ask_seniors():
-    return render_template("ask-seniors.html")
+
+    conn = get_db_connection()
+
+    questions = conn.execute(
+        "SELECT * FROM Questions ORDER BY question_id DESC"
+    ).fetchall()
+
+    answers_by_question = {}
+
+    for q in questions:
+        answers_by_question[q["question_id"]] = conn.execute(
+            "SELECT * FROM Answers WHERE question_id = ? ORDER BY answer_id ASC",
+            (q["question_id"],)
+        ).fetchall()
+
+    conn.close()
+
+    return render_template(
+        "ask-seniors.html",
+        questions=questions,
+        answers_by_question=answers_by_question
+    )
 
 
 @app.route("/projects")
@@ -363,6 +400,7 @@ def login():
             # 5. Remember that the student is logged in
             session["user_id"] = user["user_id"]
             session["user_name"] = user["full_name"]
+            session.permanent = True
 
             return redirect(url_for("home"))
 
@@ -444,12 +482,28 @@ def register():
 def questions():
 
     if request.method == "POST":
-        question_text = request.form.get("question_text", "").strip()
+
+        title = request.form.get("title", "").strip()
+        details = request.form.get("details", "").strip()
         category = request.form.get("category", "").strip()
 
-        allowed_categories = ["General", "Academics", "Placements"]
+        allowed_categories = [
+        "General",
+        "Academics",
+        "Placements",
+        "College life",
+        "Career",
+        "Projects"
+        ]
 
-        if question_text and category in allowed_categories:
+        if (
+            len(title) >= 8
+            and len(details) >= 10
+            and category in allowed_categories
+        ):
+
+            question_text = title + "\n\nDetails:\n" + details
+
             conn = get_db_connection()
 
             conn.execute(
@@ -462,7 +516,7 @@ def questions():
             conn.commit()
             conn.close()
 
-        return redirect(url_for("questions"))
+        return redirect(url_for("ask_seniors"))
 
     conn = get_db_connection()
 
@@ -525,7 +579,7 @@ def submit_answer(question_id):
 
         conn.close()
 
-    return redirect(url_for("questions"))
+    return redirect(url_for("ask_seniors"))
 
 
 create_tables()

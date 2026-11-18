@@ -23,6 +23,7 @@
     <a href="{{ url_for('information') }}">Information</a>
     <a href="{{ url_for('ask_seniors') }}">Ask Seniors</a>
     <a href="{{ url_for('projects') }}">Projects</a>
+    <a href="{{ url_for('seniors') }}">Senior Directory</a>
 
     {% if session.get('user_id') %}
         <span>Welcome, {{ session.get('user_name') }}</span>
@@ -100,6 +101,9 @@
                 </p>
                 <a class="text-link" href="{{ url_for('ask_seniors') }}">
                     Ask a question <span>→</span>
+                </a>
+                <a class="text-link" href="{{ url_for('seniors') }}">
+                    Browse senior profiles <span>→</span>
                 </a>
             </article>
 
