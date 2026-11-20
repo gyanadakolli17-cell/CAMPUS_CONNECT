@@ -483,6 +483,9 @@ def questions():
 
     if request.method == "POST":
 
+        if not session.get("user_id"):
+            return redirect(url_for("login"))
+
         title = request.form.get("title", "").strip()
         details = request.form.get("details", "").strip()
         category = request.form.get("category", "").strip()
@@ -557,6 +560,9 @@ def questions():
 @app.route("/answer/<int:question_id>", methods=["POST"])
 def submit_answer(question_id):
 
+    if not session.get("user_id"):
+        return redirect(url_for("login"))
+    
     answer_text = request.form.get("answer_text", "").strip()
 
     if answer_text:
